@@ -16,22 +16,38 @@ Route::get('/', [
     'as' => 'app.index'
 ]);
 
-Route::get('/signin', [
-    'uses' => 'AppController@getSignIn',
-    'as' => 'app.signin'
-]);
+Route::group(['middleware' => 'guest'], function() {
+    Route::get('/signin', [
+        'uses' => 'AppController@getSignIn',
+        'as' => 'app.signin'
+    ]);
+    
+    Route::post('/signin', [
+        'uses' => 'AppController@postSignIn',
+        'as' => 'app.signin'
+    ]);
+    
+    Route::get('/signup', [
+        'uses' => 'AppController@getSignUp',
+        'as' => 'app.signup'
+    ]);
+    
+    Route::post('/signup', [
+        'uses' => 'AppController@postSignUp',
+        'as' => 'app.signup'
+    ]);     
+});
 
-Route::post('/signin', [
-    'uses' => 'AppController@getSignIn',
-    'as' => 'app.signin'
-]);
-
-Route::get('/signup', [
-    'uses' => 'AppController@getSignUp',
-    'as' => 'app.signup'
-]);
-
-Route::post('/signup', [
-    'uses' => 'AppController@getSignUp',
-    'as' => 'app.signup'
-]);
+Route::group(['prefix' => 'user'], function() {
+    Route::group(['middleware' => 'auth'], function() {
+        Route::get('profile', [
+            'uses' => 'UserController@getProfile',
+            'as' => 'user.profile'
+        ]);
+        
+        Route::get('/logout', [
+            'uses' => 'AppController@getLogout',
+            'as' => 'app.logout'
+        ]);        
+    });
+});
