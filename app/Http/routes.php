@@ -11,6 +11,27 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [
+    'uses' => 'AppController@getIndex',
+    'as' => 'app.index'
+]);
+
+Route::get('/signin', [
+    'uses' => 'AppController@getSignIn',
+    'as' => 'app.signin'
+]);
+
+Route::post('/signin', [
+    'uses' => 'AppController@getSignIn',
+    'as' => 'app.signin'
+]);
+
+Route::get('/signup', [
+    'uses' => 'AppController@getSignUp',
+    'as' => 'app.signup'
+]);
+
+Route::post('/signup', [
+    'uses' => 'AppController@getSignUp',
+    'as' => 'app.signup'
+]);
