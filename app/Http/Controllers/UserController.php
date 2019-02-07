@@ -12,4 +12,9 @@ class UserController extends Controller
     {
         return view('user.profile');
     }
+    
+    public function getAdmin()
+    {
+        return view('user.admin');
+    }
 }

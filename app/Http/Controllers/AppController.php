@@ -29,7 +29,14 @@ class AppController extends Controller
         
         if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) 
         {
-            return redirect()->route('user.profile');
+            if (Auth::user()->hasRole('user'))
+            {
+                return redirect()->route('user.profile');
+            }
+            else
+            {
+                return redirect()->route('admin.profile');    
+            }
         }
         
         return redirect()->back();        

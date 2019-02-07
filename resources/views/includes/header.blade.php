@@ -9,6 +9,26 @@
       <li class="nav-item active">
         <a class="nav-link" href="{{ route('app.index') }}">Home <span class="sr-only">(current)</span></a>
       </li>
+      
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-user"></i>&nbsp;Management
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              @if (Auth::check())
+                  @if (Auth::user()->hasRole('user'))
+                      <a class="dropdown-item" href="{{ route('user.profile') }}">User Profile</a>
+                  @else
+                      <a class="dropdown-item" href="{{ route('admin.profile') }}">Admin Profile</a>
+                  @endif
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{{ route('app.logout') }}">Logout</a>            
+              @else
+                  <a class="dropdown-item" href="{{ route('app.signup') }}">Signup</a>
+                  <a class="dropdown-item" href="{{ route('app.signin') }}">Signin</a>
+              @endif
+          </div>
+      </li>
     </ul>
   </div>
 </nav>

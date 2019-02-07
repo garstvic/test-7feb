@@ -40,14 +40,23 @@ Route::group(['middleware' => 'guest'], function() {
 
 Route::group(['prefix' => 'user'], function() {
     Route::group(['middleware' => 'auth'], function() {
-        Route::get('profile', [
+        Route::get('/profile', [
             'uses' => 'UserController@getProfile',
-            'as' => 'user.profile'
+            'as' => 'user.profile',
+            'middleware' => 'roles',
+            'roles' => ['user']
         ]);
         
         Route::get('/logout', [
             'uses' => 'AppController@getLogout',
             'as' => 'app.logout'
-        ]);        
+        ]);    
+        
+        Route::get('/admin', [
+            'uses' => 'UserController@getAdmin',
+            'as' => 'admin.profile',
+            'middleware' => 'roles',
+            'roles' => ['admin']
+        ]);
     });
 });
